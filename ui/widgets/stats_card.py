@@ -16,7 +16,7 @@ class StatsCard(ft.Container):
                 self._subtitle,
             ], spacing=0),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
             expand=True,

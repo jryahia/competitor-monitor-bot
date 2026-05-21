@@ -16,7 +16,7 @@ class StatusBadge(ft.Container):
             content=ft.Text(style["label"], size=11, weight=ft.FontWeight.W_500, color=style["text"]),
             bgcolor=style["bg"],
             border_radius=12,
-            padding=ft.padding.symmetric(horizontal=8, vertical=4),
+            padding=ft.Padding.symmetric(horizontal=8, vertical=4),
         )
 
     @staticmethod

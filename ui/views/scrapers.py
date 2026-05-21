@@ -52,7 +52,7 @@ class ScrapersView:
                 self._urls_list,
             ]),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
         )
@@ -83,13 +83,13 @@ class ScrapersView:
                     content=ft.Text("⚪ Attivo", size=11, color=Theme.ACCENT_GREEN),
                     bgcolor="#00FF8815",
                     border_radius=12,
-                    padding=ft.padding.symmetric(horizontal=8, vertical=4),
+                    padding=ft.Padding.symmetric(horizontal=8, vertical=4),
                 ),
                 ft.IconButton(ft.icons.DELETE_OUTLINE, icon_size=18, icon_color=Theme.ACCENT_RED, on_click=lambda _, u=url: self._on_remove_url(u)),
             ], alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             bgcolor=Theme.BG_INPUT,
             border_radius=8,
-            padding=ft.padding.symmetric(horizontal=12, vertical=8),
+            padding=ft.Padding.symmetric(horizontal=12, vertical=8),
         )
 
     def _on_add_url(self, e):

@@ -34,7 +34,7 @@ class ProductsView:
             heading_row_color=Theme.BG_INPUT,
             heading_row_height=44,
             data_row_color={"": Theme.BG_CARD},
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=8,
             horizontal_lines=ft.BorderSide(0.5, Theme.BORDER),
         )
@@ -46,7 +46,7 @@ class ProductsView:
                 ft.ResponsiveRow([ft.Container(content=self._table, col={"xs": 12})]),
             ]),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
         )

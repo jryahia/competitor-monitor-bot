@@ -38,7 +38,7 @@ class DashboardView:
                 color=Theme.TEXT_PRIMARY,
                 bgcolor=Theme.ACCENT_GREEN,
                 shape=ft.RoundedRectangleBorder(radius=Theme.BUTTON_RADIUS),
-                padding=ft.padding.symmetric(horizontal=24, vertical=14),
+                padding=ft.Padding.symmetric(horizontal=24, vertical=14),
             ),
         )
 
@@ -59,7 +59,7 @@ class DashboardView:
                 ft.Container(content=self._changes_feed, height=250),
             ]),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
         )

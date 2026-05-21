@@ -52,7 +52,7 @@ class SettingsView:
                 _field("Chat ID", "TELEGRAM_CHAT_ID", "ID chat/channel privato"),
             ]),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
             expand=True,
@@ -79,7 +79,7 @@ class SettingsView:
                 ),
             ]),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
             expand=True,
@@ -93,7 +93,7 @@ class SettingsView:
                 _field("Intervallo Scansione (ore)", "SCRAPE_INTERVAL_HOURS", "24"),
             ]),
             bgcolor=Theme.BG_CARD,
-            border=ft.border.all(1, Theme.BORDER),
+            border=ft.Border.all(1, Theme.BORDER),
             border_radius=Theme.CARD_RADIUS,
             padding=20,
             expand=True,
@@ -107,7 +107,7 @@ class SettingsView:
                 color=Theme.TEXT_PRIMARY,
                 bgcolor=Theme.ACCENT_BLUE,
                 shape=ft.RoundedRectangleBorder(radius=Theme.BUTTON_RADIUS),
-                padding=ft.padding.symmetric(horizontal=24, vertical=14),
+                padding=ft.Padding.symmetric(horizontal=24, vertical=14),
             ),
         )
 
@@ -147,20 +147,13 @@ class SettingsView:
         env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
         try:
             with open(env_path, "w") as f:
-                f.write("# Competitor Monitor Bot — Configurazione
-")
-                f.write(f"COMPETITOR_URLS={self._fields.get('COMPETITOR_URLS', ft.TextField()).value or ''}
-")
-                f.write(f"TELEGRAM_BOT_TOKEN={self._fields.get('TELEGRAM_BOT_TOKEN', ft.TextField()).value or ''}
-")
-                f.write(f"TELEGRAM_CHAT_ID={self._fields.get('TELEGRAM_CHAT_ID', ft.TextField()).value or ''}
-")
-                f.write(f"OPENAI_API_KEY={self._fields.get('OPENAI_API_KEY', ft.TextField()).value or ''}
-")
-                f.write(f"LLM_MODEL={self._fields.get('LLM_MODEL', ft.TextField()).value or 'gpt-4o-mini'}
-")
-                f.write(f"SCRAPE_INTERVAL_HOURS={self._fields.get('SCRAPE_INTERVAL_HOURS', ft.TextField()).value or '24'}
-")
+                f.write("# Competitor Monitor Bot — Configurazione\n")
+                f.write(f"COMPETITOR_URLS={self._fields.get('COMPETITOR_URLS', ft.TextField()).value or ''}\n")
+                f.write(f"TELEGRAM_BOT_TOKEN={self._fields.get('TELEGRAM_BOT_TOKEN', ft.TextField()).value or ''}\n")
+                f.write(f"TELEGRAM_CHAT_ID={self._fields.get('TELEGRAM_CHAT_ID', ft.TextField()).value or ''}\n")
+                f.write(f"OPENAI_API_KEY={self._fields.get('OPENAI_API_KEY', ft.TextField()).value or ''}\n")
+                f.write(f"LLM_MODEL={self._fields.get('LLM_MODEL', ft.TextField()).value or 'gpt-4o-mini'}\n")
+                f.write(f"SCRAPE_INTERVAL_HOURS={self._fields.get('SCRAPE_INTERVAL_HOURS', ft.TextField()).value or '24'}\n")
             self._status_text.value = "✅ Impostazioni salvate con successo!"
             self._status_text.color = Theme.ACCENT_GREEN
             self._status_text.update()
