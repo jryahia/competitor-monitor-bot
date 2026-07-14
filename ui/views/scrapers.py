@@ -40,7 +40,7 @@ class ScrapersView:
             config = self._bot["config"].Config.from_env()
             for url in config.competitor_urls:
                 self._urls_list.controls.append(self._build_url_item(url))
-        except:
+        except Exception:
             self._urls_list.controls.append(
                 ft.Text("Configura le URL nel file .env", size=13, color=Theme.TEXT_MUTED, italic=True)
             )
