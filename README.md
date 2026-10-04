@@ -1,4 +1,22 @@
-# Competitor Monitor Bot 🤖
+# Competitor Monitor Bot
+
+**Scrapes competitor e-commerce pages daily, detects price, stock and product changes, and sends an Italian summary to Telegram.**
+
+![Python](https://img.shields.io/badge/Python-161b22?style=for-the-badge&labelColor=161b22&color=161b22) ![Playwright](https://img.shields.io/badge/Playwright-161b22?style=for-the-badge&labelColor=161b22&color=161b22) ![OpenAI](https://img.shields.io/badge/OpenAI-161b22?style=for-the-badge&labelColor=161b22&color=161b22) ![Telegram Bot API](https://img.shields.io/badge/Telegram%20Bot%20API-161b22?style=for-the-badge&labelColor=161b22&color=161b22) ![Flet](https://img.shields.io/badge/Flet-161b22?style=for-the-badge&labelColor=161b22&color=161b22)
+
+```mermaid
+flowchart LR
+    S0["Competitor URLs"]
+    S1["Playwright scraper"]
+    S2["Change detection vs saved state"]
+    S3["AI summary (template fallback)"]
+    S4["Telegram report"]
+    S0 --> S1 --> S2 --> S3 --> S4
+```
+
+## Problem it solves
+
+Checking competitor prices by hand every day does not scale. The bot does it on a schedule, keeps state to detect real changes, and delivers a short summary where the owner already reads messages.
 
 **Monitoraggio automatico dei concorrenti e-commerce con report giornalieri in italiano via Telegram.**
 
@@ -10,12 +28,12 @@ Automatic competitor monitoring bot that scrapes up to 5 e-commerce URLs daily, 
 
 | Funzione | Dettaglio |
 |---|---|
-| 🕷️ Scraping async | Playwright Chromium headless, 30s timeout, selettori multipli di fallback |
-| 🔍 Rilevamento cambiamenti | Calo/aumento prezzi, esaurimento stock, rientro merce, nuovi prodotti, sconti |
-| 🤖 Riepilogo AI | GPT-4o-mini in italiano con emoji, fallback template automatico |
-| 📢 Notifiche Telegram | Consegna al canale privato, split automatico messaggi >4096 caratteri |
-| 💾 Stato persistente | File JSON con backup automatico in caso di corruzione |
-| ⚙️ Modalità flessibile | `--once` per esecuzione singola, `--daemon` per ciclo schedulato |
+| Scraping async | Playwright Chromium headless, 30s timeout, selettori multipli di fallback |
+| Rilevamento cambiamenti | Calo/aumento prezzi, esaurimento stock, rientro merce, nuovi prodotti, sconti |
+| Riepilogo AI | GPT-4o-mini in italiano con emoji, fallback template automatico |
+| Notifiche Telegram | Consegna al canale privato, split automatico messaggi >4096 caratteri |
+| Stato persistente | File JSON con backup automatico in caso di corruzione |
+| Modalità flessibile | `--once` per esecuzione singola, `--daemon` per ciclo schedulato |
 
 ---
 
@@ -143,14 +161,14 @@ URLs → scrape_all() → compare_snapshots() → save_state()
 
 | Tipo | Emoji | Severità default |
 |---|---|---|
-| Calo prezzo (>10%) | 📉 | Alta ❗ |
-| Calo prezzo (<10%) | 📉 | Media ⚠️ |
-| Aumento prezzo | 📈 | Bassa ℹ️ |
-| Esaurimento stock | 🚫 | Alta ❗ |
-| Rientro merce | ✅ | Media ⚠️ |
-| Nuovo prodotto | 🆕 | Media ⚠️ |
-| Sconto aggiunto | 🔥 | Alta ❗ |
-| Sconto rimosso | 💥 | Bassa ℹ️ |
+| Calo prezzo (>10%) |  | Alta  |
+| Calo prezzo (<10%) |  | Media  |
+| Aumento prezzo |  | Bassa ℹ |
+| Esaurimento stock |  | Alta  |
+| Rientro merce | Yes | Media  |
+| Nuovo prodotto |  | Media  |
+| Sconto aggiunto |  | Alta  |
+| Sconto rimosso |  | Bassa ℹ |
 
 ---
 
@@ -176,21 +194,20 @@ URLs → scrape_all() → compare_snapshots() → save_state()
 
 MIT
 
-
 ---
 
-## 💻  Desktop App / Applicazione Desktop
+## Desktop App / Applicazione Desktop
 
 ### English
 The **Competitor Monitor Bot** also includes a native desktop application built with **Flet** (Flutter-based Python UI). It works on **Windows, macOS, and Linux** with a modern dark interface.
 
 #### Features
-- 📊 Live dashboard with stats and scan history (4 KPI cards)
-- 📦 Product table with search, status badges, and availability tracking
-- ⚡ URL management — add/remove competitor URLs visually
-- ⚙️ Settings panel — configure Telegram, OpenAI, and scrape interval from the GUI
-- ▶️ One-click scan button with real-time results
-- 🏴 Italian interface (targeting Italian dropshippers)
+- Live dashboard with stats and scan history (4 KPI cards)
+- Product table with search, status badges, and availability tracking
+- URL management — add/remove competitor URLs visually
+- Settings panel — configure Telegram, OpenAI, and scrape interval from the GUI
+- ▶ One-click scan button with real-time results
+- Italian interface (targeting Italian dropshippers)
 
 #### Run the Desktop App
 ```bash
@@ -232,7 +249,7 @@ Il file eseguibile sarà nella cartella `dist/`.
 
 ---
 
-### 🇮🇹 Pricing / Prezzi
+### Pricing / Prezzi
 | Piano | Prezzo | Competitors |
 |-------|--------|-------------|
 | Starter | €49/mese | 1-2 URL |
