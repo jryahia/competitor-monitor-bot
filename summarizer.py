@@ -13,21 +13,21 @@ from comparator import Change
 
 logger = logging.getLogger(__name__)
 
-_EMOJI_MAP = {
-    "price_drop": "📉",
-    "price_increase": "📈",
-    "stockout": "🚫",
-    "restock": "✅",
-    "new_product": "🆕",
-    "new_arrival_flag": "🆕",
-    "discount_added": "🔥",
-    "discount_removed": "💥",
+_CHANGE_LABEL = {
+    "price_drop": "[CALO PREZZO]",
+    "price_increase": "[AUMENTO PREZZO]",
+    "stockout": "[ESAURITO]",
+    "restock": "[DISPONIBILE]",
+    "new_product": "[NUOVO]",
+    "new_arrival_flag": "[NUOVO]",
+    "discount_added": "[SCONTO]",
+    "discount_removed": "[SCONTO RIMOSSO]",
 }
 
-_SEVERITY_EMOJI = {
-    "high": "❗",
-    "medium": "⚠️",
-    "low": "ℹ️",
+_SEVERITY_LABEL = {
+    "high": "(alta)",
+    "medium": "(media)",
+    "low": "(bassa)",
 }
 
 _SYSTEM_PROMPT = """Sei un analista di e-commerce esperto che monitora i concorrenti per conto di un'azienda italiana.
@@ -35,7 +35,7 @@ Il tuo compito è generare un report quotidiano conciso e professionale sui camb
 
 Regole:
 - Scrivi SEMPRE in italiano
-- Usa emoji pertinenti per ogni tipo di cambiamento (📉 calo prezzo, 📈 aumento prezzo, 🚫 esaurito, ✅ di nuovo disponibile, 🆕 nuovo prodotto, 🔥 sconto aggiunto, 💥 sconto rimosso)
+- Non usare emoji. Indica ogni tipo di cambiamento con un'etichetta testuale tra parentesi quadre (es. [CALO PREZZO], [AUMENTO PREZZO], [ESAURITO], [DISPONIBILE], [NUOVO], [SCONTO], [SCONTO RIMOSSO])
 - Sii diretto e informativo, senza fronzoli
 - Evidenzia i cambiamenti più critici (alta severità) per primi
 - Concludi con una breve analisi strategica di 1-2 frasi
@@ -46,9 +46,8 @@ def _build_changes_text(changes: list[Change]) -> str:
     """Format changes into a structured text for the LLM prompt."""
     lines = []
     for c in changes:
-        emoji = _EMOJI_MAP.get(c.change_type, "🔄")
-        sev = _SEVERITY_EMOJI.get(c.severity, "")
-        line = f"{emoji}{sev} [{c.change_type.upper()}] {c.description} (URL: {c.url})"
+        sev = _SEVERITY_LABEL.get(c.severity, "")
+        line = f"[{c.change_type.upper()}] {sev} {c.description} (URL: {c.url})"
         if c.old_value and c.new_value:
             line += f" | Prima: {c.old_value} → Ora: {c.new_value}"
         lines.append(line)
@@ -62,19 +61,19 @@ def _fallback_summary(changes: list[Change], date_str: str) -> str:
     low = [c for c in changes if c.severity == "low"]
 
     lines = [
-        f"📊 *Report Concorrenti — {date_str}*",
+        f"*Report Concorrenti — {date_str}*",
         "",
         f"Rilevati {len(changes)} cambiamenti totali:",
-        f"  ❗ Alta priorità: {len(high)}",
-        f"  ⚠️ Media priorità: {len(medium)}",
-        f"  ℹ️ Bassa priorità: {len(low)}",
+        f"  Alta priorità: {len(high)}",
+        f"  Media priorità: {len(medium)}",
+        f"  Bassa priorità: {len(low)}",
         "",
         "*Dettagli:*",
     ]
 
     for c in sorted(changes, key=lambda x: {"high": 0, "medium": 1, "low": 2}[x.severity]):
-        emoji = _EMOJI_MAP.get(c.change_type, "🔄")
-        lines.append(f"{emoji} {c.description}")
+        label = _CHANGE_LABEL.get(c.change_type, "[VARIAZIONE]")
+        lines.append(f"{label} {c.description}")
 
     lines.append("")
     lines.append("_(Riepilogo generato automaticamente — servizio AI temporaneamente non disponibile)_")
@@ -101,8 +100,8 @@ def generate_summary(
     """
     if not changes:
         return (
-            f"📊 *Report Concorrenti — {date_str}*\n\n"
-            "✅ Nessun cambiamento rilevato oggi nei negozi monitorati."
+            f"*Report Concorrenti — {date_str}*\n\n"
+            "Nessun cambiamento rilevato oggi nei negozi monitorati."
         )
 
     changes_text = _build_changes_text(changes)
@@ -128,7 +127,7 @@ def generate_summary(
         summary = response.choices[0].message.content or ""
         logger.info("LLM summary generated (%d chars).", len(summary))
         # Prepend header so the message always starts with the date
-        header = f"📊 *Report Concorrenti — {date_str}*\n\n"
+        header = f"*Report Concorrenti — {date_str}*\n\n"
         return header + summary
 
     except OpenAIError as exc:

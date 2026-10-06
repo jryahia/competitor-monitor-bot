@@ -159,16 +159,16 @@ URLs → scrape_all() → compare_snapshots() → save_state()
 
 ## Cambiamenti rilevati / Detected changes
 
-| Tipo | Emoji | Severità default |
+| Tipo | Etichetta | Severità default |
 |---|---|---|
-| Calo prezzo (>10%) |  | Alta  |
-| Calo prezzo (<10%) |  | Media  |
-| Aumento prezzo |  | Bassa ℹ |
-| Esaurimento stock |  | Alta  |
-| Rientro merce | Yes | Media  |
-| Nuovo prodotto |  | Media  |
-| Sconto aggiunto |  | Alta  |
-| Sconto rimosso |  | Bassa ℹ |
+| Calo prezzo (>10%) | `[CALO PREZZO]` | Alta |
+| Calo prezzo (<10%) | `[CALO PREZZO]` | Media |
+| Aumento prezzo | `[AUMENTO PREZZO]` | Bassa |
+| Esaurimento stock | `[ESAURITO]` | Alta |
+| Rientro merce | `[DISPONIBILE]` | Media |
+| Nuovo prodotto | `[NUOVO]` | Media |
+| Sconto aggiunto | `[SCONTO]` | Alta |
+| Sconto rimosso | `[SCONTO RIMOSSO]` | Bassa |
 
 ---
 
@@ -206,7 +206,7 @@ The **Competitor Monitor Bot** also includes a native desktop application built 
 - Product table with search, status badges, and availability tracking
 - URL management — add/remove competitor URLs visually
 - Settings panel — configure Telegram, OpenAI, and scrape interval from the GUI
-- ▶ One-click scan button with real-time results
+- One-click scan button with real-time results
 - Italian interface (targeting Italian dropshippers)
 
 #### Run the Desktop App

@@ -7,10 +7,10 @@ class Sidebar(ft.Container):
         self._items = {}
 
         nav_items = [
-            ("dashboard", "📊  Dashboard"),
-            ("products", "📦  Prodotti"),
-            ("scrapers", "⚡  Scraper"),
-            ("settings", "⚙️  Impostazioni"),
+            ("dashboard", " Dashboard"),
+            ("products", " Prodotti"),
+            ("scrapers", " Scraper"),
+            ("settings", " Impostazioni"),
         ]
 
         content_items = []
@@ -18,7 +18,7 @@ class Sidebar(ft.Container):
         # App title
         title = ft.Container(
             content=ft.Column([
-                ft.Text("🤖", size=28, text_align=ft.TextAlign.CENTER),
+                ft.Icon(ft.Icons.RADAR, size=28, color=Theme.ACCENT_GREEN),
                 ft.Text("Competitor Monitor", size=16, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY, text_align=ft.TextAlign.CENTER),
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=4),
             padding=ft.Padding.only(bottom=24, top=12),
@@ -34,7 +34,7 @@ class Sidebar(ft.Container):
                 border_radius=8,
                 ink=True,
                 on_click=lambda _, n=name: self._on_item_click(n),
-                margin=ft.margin.symmetric(horizontal=8, vertical=2),
+                margin=ft.Margin.symmetric(horizontal=8, vertical=2),
             )
             self._items[name] = container
             content_items.append(container)

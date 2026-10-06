@@ -10,7 +10,7 @@ class SettingsView:
         self._status_text = ft.Text("", size=12, color=Theme.ACCENT_GREEN)
 
     def build(self):
-        header = ft.Text("⚙️  Impostazioni", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
+        header = ft.Text(" Impostazioni", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
 
         # Load current env
         env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
@@ -45,7 +45,7 @@ class SettingsView:
         # Telegram section
         telegram_section = ft.Container(
             content=ft.Column([
-                ft.Text("🤖  Telegram", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY),
+                ft.Text(" Telegram", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY),
                 ft.Container(height=8),
                 _field("Bot Token", "TELEGRAM_BOT_TOKEN", "Inserisci il token del bot"),
                 ft.Container(height=8),
@@ -61,7 +61,7 @@ class SettingsView:
         # OpenAI section
         openai_section = ft.Container(
             content=ft.Column([
-                ft.Text("🧠  OpenAI", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY),
+                ft.Text(" OpenAI", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY),
                 ft.Container(height=8),
                 _field("API Key", "OPENAI_API_KEY", "sk-...", masked=True),
                 ft.Container(height=8),
@@ -88,7 +88,7 @@ class SettingsView:
         # Config section
         config_section = ft.Container(
             content=ft.Column([
-                ft.Text("⚙️  Configurazione", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY),
+                ft.Text(" Configurazione", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY),
                 ft.Container(height=8),
                 _field("Intervallo Scansione (ore)", "SCRAPE_INTERVAL_HOURS", "24"),
             ]),
@@ -101,7 +101,7 @@ class SettingsView:
 
         # Action buttons
         save_btn = ft.ElevatedButton(
-            "💾  Salva Impostazioni",
+            " Salva Impostazioni",
             on_click=self._on_save,
             style=ft.ButtonStyle(
                 color=Theme.TEXT_PRIMARY,
@@ -112,7 +112,7 @@ class SettingsView:
         )
 
         test_btn = ft.OutlinedButton(
-            "📤  Test Telegram",
+            " Test Telegram",
             on_click=self._on_test_telegram,
             style=ft.ButtonStyle(
                 color=Theme.TEXT_PRIMARY,
@@ -154,16 +154,16 @@ class SettingsView:
                 f.write(f"OPENAI_API_KEY={self._fields.get('OPENAI_API_KEY', ft.TextField()).value or ''}\n")
                 f.write(f"LLM_MODEL={self._fields.get('LLM_MODEL', ft.TextField()).value or 'gpt-4o-mini'}\n")
                 f.write(f"SCRAPE_INTERVAL_HOURS={self._fields.get('SCRAPE_INTERVAL_HOURS', ft.TextField()).value or '24'}\n")
-            self._status_text.value = "✅ Impostazioni salvate con successo!"
+            self._status_text.value = "Impostazioni salvate con successo!"
             self._status_text.color = Theme.ACCENT_GREEN
             self._status_text.update()
         except Exception as ex:
-            self._status_text.value = f"❌ Errore: {ex}"
+            self._status_text.value = f"Errore: {ex}"
             self._status_text.color = Theme.ACCENT_RED
             self._status_text.update()
 
     def _on_test_telegram(self, e):
-        self._status_text.value = "📤 Invio messaggio di test..."
+        self._status_text.value = "Invio messaggio di test..."
         self._status_text.color = Theme.ACCENT_BLUE
         self._status_text.update()
         try:
@@ -171,12 +171,12 @@ class SettingsView:
             chat_id = self._fields.get("TELEGRAM_CHAT_ID", ft.TextField()).value
             if token and chat_id:
                 # TODO: actual telegram test
-                self._status_text.value = "✅ Messaggio di test inviato!"
+                self._status_text.value = "Messaggio di test inviato!"
                 self._status_text.color = Theme.ACCENT_GREEN
             else:
-                self._status_text.value = "⚠️ Token o Chat ID mancanti"
+                self._status_text.value = "Token o Chat ID mancanti"
                 self._status_text.color = Theme.ACCENT_AMBER
         except Exception as ex:
-            self._status_text.value = f"❌ Errore: {ex}"
+            self._status_text.value = f"Errore: {ex}"
             self._status_text.color = Theme.ACCENT_RED
         self._status_text.update()

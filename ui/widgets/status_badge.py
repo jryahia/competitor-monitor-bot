@@ -2,11 +2,11 @@ import flet as ft
 from ui.theme import Theme
 
 _STATUS_STYLES = {
-    "available": {"bg": "#00FF8815", "text": "#00FF88", "label": "🟢 Disponibile"},
-    "out_of_stock": {"bg": "#FF444415", "text": "#FF4444", "label": "🔴 Esaurito"},
-    "new": {"bg": "#58A6FF15", "text": "#58A6FF", "label": "🆕 Nuovo"},
-    "discount": {"bg": "#FFB34715", "text": "#FFB347", "label": "🔥 Sconto"},
-    "unknown": {"bg": "#484F5815", "text": "#484F58", "label": "⚪ Sconosciuto"},
+    "available": {"bg": "#00FF8815", "text": "#00FF88", "label": "Disponibile"},
+    "out_of_stock": {"bg": "#FF444415", "text": "#FF4444", "label": "Esaurito"},
+    "new": {"bg": "#58A6FF15", "text": "#58A6FF", "label": "Nuovo"},
+    "discount": {"bg": "#FFB34715", "text": "#FFB347", "label": "Sconto"},
+    "unknown": {"bg": "#484F5815", "text": "#484F58", "label": "Sconosciuto"},
 }
 
 class StatusBadge(ft.Container):

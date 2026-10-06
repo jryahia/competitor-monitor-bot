@@ -15,7 +15,7 @@ class DashboardView:
         self._scanning = False
 
     def build(self):
-        header = ft.Text("📊  Dashboard", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
+        header = ft.Text(" Dashboard", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
 
         # Stat cards row
         self._stats = {
@@ -31,8 +31,8 @@ class DashboardView:
 
         # Scan button
         self._scan_btn = ft.ElevatedButton(
-            "▶️  Scansiona Ora",
-            icon=ft.icons.PLAY_ARROW,
+            "Scansiona Ora",
+            icon=ft.Icons.PLAY_ARROW,
             on_click=self._on_scan,
             style=ft.ButtonStyle(
                 color=Theme.TEXT_PRIMARY,
@@ -43,11 +43,11 @@ class DashboardView:
         )
 
         # Recent changes section
-        changes_header = ft.Text("📋  Cambiamenti Recenti", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY)
+        changes_header = ft.Text(" Cambiamenti Recenti", size=16, weight=ft.FontWeight.W_600, color=Theme.TEXT_PRIMARY)
         self._changes_feed = ft.Column(spacing=6, scroll=ft.ScrollMode.AUTO)
         self._changes_feed.controls.append(
             ft.Container(
-                content=ft.Text("Nessun cambiamento nelle ultime 24 ore 🟢", size=13, color=Theme.TEXT_MUTED),
+                content=ft.Text("Nessun cambiamento nelle ultime 24 ore ", size=13, color=Theme.TEXT_MUTED),
                 padding=20,
             )
         )
@@ -81,7 +81,7 @@ class DashboardView:
         if self._scanning:
             return
         self._scanning = True
-        self._scan_btn.text = "⏳  Scansionando..."
+        self._scan_btn.content = "Scansione in corso..."
         self._scan_btn.disabled = True
         self._scan_btn.update()
 
@@ -90,11 +90,11 @@ class DashboardView:
             results = await loop.run_in_executor(None, self._run_scrape)
             self._update_stats(results)
         except Exception as ex:
-            self._changes_feed.controls.insert(0, ft.Text(f"❌ Errore: {ex}", size=12, color=Theme.ACCENT_RED))
+            self._changes_feed.controls.insert(0, ft.Text(f"Errore: {ex}", size=12, color=Theme.ACCENT_RED))
             self._changes_feed.update()
         finally:
             self._scanning = False
-            self._scan_btn.text = "▶️  Scansiona Ora"
+            self._scan_btn.content = "Scansiona Ora"
             self._scan_btn.disabled = False
             self._scan_btn.update()
 
@@ -140,17 +140,25 @@ class DashboardView:
         changes = results.get("changes", {})
         if not changes or all(len(v) == 0 for v in changes.values()):
             self._changes_feed.controls.append(
-                ft.Container(content=ft.Text("Nessuna variazione 🟢", size=13, color=Theme.TEXT_MUTED), padding=20)
+                ft.Container(content=ft.Text("Nessuna variazione ", size=13, color=Theme.TEXT_MUTED), padding=20)
             )
         else:
             for url, url_changes in changes.items():
                 for c in url_changes[:10]:
-                    emoji = {"price_drop": "📉", "price_increase": "📈", "stockout": "🚫", "restock": "✅", "new_product": "🆕", "discount": "🔥"}.get(c.get("type", ""), "ℹ️")
+                    icon = {
+                        "price_drop": ft.Icons.TRENDING_DOWN,
+                        "price_increase": ft.Icons.TRENDING_UP,
+                        "stockout": ft.Icons.REMOVE_SHOPPING_CART,
+                        "restock": ft.Icons.INVENTORY_2,
+                        "new_product": ft.Icons.FIBER_NEW,
+                        "discount": ft.Icons.LOCAL_OFFER,
+                    }.get(c.get("type", ""), ft.Icons.INFO_OUTLINE)
                     color = Theme.ACCENT_RED if c.get("severity") == "high" else Theme.ACCENT_AMBER if c.get("severity") == "medium" else Theme.TEXT_SECONDARY
                     self._changes_feed.controls.append(
                         ft.Container(
                             content=ft.Row([
-                                ft.Text(f"{emoji} {c.get('product_name', '?')}", size=13, color=color, expand=True),
+                                ft.Icon(icon, size=16, color=color),
+                                ft.Text(c.get('product_name', '?'), size=13, color=color, expand=True),
                                 ft.Text(f"{c.get('old_value', '')} → {c.get('new_value', '')}", size=11, color=Theme.TEXT_MUTED),
                             ]),
                             bgcolor=Theme.BG_INPUT,

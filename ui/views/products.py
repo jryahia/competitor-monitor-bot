@@ -8,7 +8,7 @@ class ProductsView:
         self._bot = bot_modules
         self._search_input = ft.TextField(
             hint_text="Cerca prodotto per nome...",
-            prefix_icon=ft.icons.SEARCH,
+            prefix_icon=ft.Icons.SEARCH,
             border_color=Theme.BORDER,
             color=Theme.TEXT_PRIMARY,
             hint_style=ft.TextStyle(color=Theme.TEXT_MUTED),
@@ -19,7 +19,7 @@ class ProductsView:
         self._products_data = {}
 
     def build(self):
-        header = ft.Text("📦  Prodotti Tracciati", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
+        header = ft.Text(" Prodotti Tracciati", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
 
         self._table = ft.DataTable(
             columns=[
@@ -78,7 +78,7 @@ class ProductsView:
                     continue
                 count += 1
                 price = f"€{p.get('price', '?')}" if p.get('price') else "—"
-                availability = "✅" if p.get("availability") in (True, "in stock") else "🚫"
+                availability = "Sì" if p.get("availability") in (True, "in stock") else "No"
                 discount = f"-{p['discount_percentage']}%" if p.get("discount_percentage") else "—"
                 badge = StatusBadge.from_product(p)
                 last_seen = p.get("last_seen", p.get("timestamp", "—"))[:10] if p.get("last_seen") else "—"

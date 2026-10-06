@@ -15,13 +15,13 @@ class ScrapersView:
         )
 
     def build(self):
-        header = ft.Text("⚡  Gestione Scraper", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
+        header = ft.Text(" Gestione Scraper", size=22, weight=ft.FontWeight.BOLD, color=Theme.TEXT_PRIMARY)
 
         # Add URL row
         add_row = ft.Row([
             self._new_url_input,
             ft.ElevatedButton(
-                "➕ Aggiungi",
+                "Aggiungi",
                 on_click=self._on_add_url,
                 style=ft.ButtonStyle(
                     color=Theme.TEXT_PRIMARY,
@@ -75,17 +75,17 @@ class ScrapersView:
         return ft.Container(
             content=ft.Row([
                 ft.Container(
-                    content=ft.Text("🟢", size=14),
-                    margin=ft.margin.only(right=8),
+                    content=ft.Icon(ft.Icons.CIRCLE, size=10, color=Theme.ACCENT_GREEN),
+                    margin=ft.Margin.only(right=8),
                 ),
                 ft.Text(short_url, size=13, color=Theme.TEXT_PRIMARY, expand=True),
                 ft.Container(
-                    content=ft.Text("⚪ Attivo", size=11, color=Theme.ACCENT_GREEN),
+                    content=ft.Text("Attivo", size=11, color=Theme.ACCENT_GREEN),
                     bgcolor="#00FF8815",
                     border_radius=12,
                     padding=ft.Padding.symmetric(horizontal=8, vertical=4),
                 ),
-                ft.IconButton(ft.icons.DELETE_OUTLINE, icon_size=18, icon_color=Theme.ACCENT_RED, on_click=lambda _, u=url: self._on_remove_url(u)),
+                ft.IconButton(ft.Icons.DELETE_OUTLINE, icon_size=18, icon_color=Theme.ACCENT_RED, on_click=lambda _, u=url: self._on_remove_url(u)),
             ], alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             bgcolor=Theme.BG_INPUT,
             border_radius=8,
